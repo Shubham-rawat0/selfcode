@@ -6,6 +6,8 @@ export const COMMANDS: Command[] = [
     description: "Start a new conversation",
     value: "/new",
     action: (ctx) => {
+      ctx.toast.show({message:"Starting new conversation..."
+      })
     },
   },
   {
@@ -13,6 +15,8 @@ export const COMMANDS: Command[] = [
     description: "Switch agents",
     value: "/agents",
     action: (ctx) => {
+      ctx.toast.show({message:"Switching agents..."
+      })
     },
   },
   {
@@ -20,6 +24,8 @@ export const COMMANDS: Command[] = [
     description: "Select AI model for generation",
     value: "/models",
     action: (ctx) => {
+      ctx.toast.show({message:"Selecting model..."
+      })
     },
   },
   {
@@ -27,7 +33,8 @@ export const COMMANDS: Command[] = [
     description: "Browse past sessions",
     value: "/sessions",
     action: (ctx) => {
-     
+     ctx.toast.show({message:"Loading sessions..."
+      })
     },
   },
   {
@@ -35,7 +42,8 @@ export const COMMANDS: Command[] = [
     description: "Change color theme",
     value: "/theme",
     action: (ctx) => {
-     
+     ctx.toast.show({message:"Opening theme picker..."
+      })
     },
   },
   {
@@ -43,19 +51,26 @@ export const COMMANDS: Command[] = [
     description: "Sign in with your browser",
     value: "/login",
     action: async (ctx) => {
+      ctx.toast.show({message:"Opening browser to sign in..."
+      })
     },
   },
   {
     name: "logout",
     description: "Sign out of your account",
     value: "/logout",
-    action: (ctx) => { },
+    action: (ctx) => { 
+      ctx.toast.show({variant:"success",message:"Signed out..."
+      })
+    },
   },
   {
     name: "upgrade",
     description: "Buy more credits",
     value: "/upgrade",
     action: async (ctx) => {
+      ctx.toast.show({message:"Opening credits checkout..."
+      })
     },
   },
   {
@@ -63,6 +78,8 @@ export const COMMANDS: Command[] = [
     description: "Open billing portal in your browser",
     value: "/usage",
     action: async (ctx) => {
+      ctx.toast.show({message:"Opening billing portal..."
+      })
     },
   },
   {
