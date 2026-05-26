@@ -77,7 +77,9 @@ export function KeyboardLayerProvider({ children }: { children: React.ReactNode 
     };
 
     // No responder handled it — exit
+
     renderer.destroy();
+    process.exit(0)
   });
 
   return (

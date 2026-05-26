@@ -1,11 +1,15 @@
- import { createCliRenderer } from "@opentui/core";
+import { createCliRenderer } from "@opentui/core";
 import { createRoot } from "@opentui/react";
 import Header from "./components/header";
 import InputBar from "./components/input-bar";
 import { ToastProvider } from "./providers/toast";
+import { KeyboardLayerProvider } from "./providers/keyboard-layer";
+import { DialogProvider } from "./providers/dialog";
 
 function App() {
   return (
+    <KeyboardLayerProvider >
+      <DialogProvider>
     <ToastProvider>
     <box 
     alignItems="center"
@@ -20,6 +24,8 @@ function App() {
       </box>
     </box>
     </ToastProvider>
+    </DialogProvider>
+    </KeyboardLayerProvider>
   );
 }
 
