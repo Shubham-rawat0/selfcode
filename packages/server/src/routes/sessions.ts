@@ -1,5 +1,5 @@
 import { zValidator } from "@hono/zod-validator"
-import { db } from "@selfcode/database"
+import { db } from "@selfcode/database/client"
 import { Role ,Mode ,MessageStatus} from "@selfcode/database/enums"
 import { findSupportedChatModel } from "@selfcode/shared"
 import { Hono } from "hono"
