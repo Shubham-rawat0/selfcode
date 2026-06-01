@@ -7,10 +7,11 @@ type Props={
     children?:ReactNode
     onSubmit:(text:string)=>void
     inputDisabled?:boolean
-    loading?:boolean
+    loading?:boolean;
+    interruptible?:boolean
 }
 
-export function SessionShell({children,onSubmit,inputDisabled=false,loading=false}:Props){
+export function SessionShell({children,onSubmit,inputDisabled=false,loading=false,interruptible=false}:Props){
 
     return(
         <box flexDirection="column"
@@ -39,7 +40,12 @@ export function SessionShell({children,onSubmit,inputDisabled=false,loading=fals
             paddingLeft={1}
             >
                 <box flexDirection="row" alignItems="center" gap={2}>
-                    {loading?<Spinner/>:null}
+                    {loading?
+                    <>
+                    <Spinner/>
+                    {interruptible?<text>esc to interrupt</text>:null}
+                    </>
+                    :null}
                 </box>
 
                 <box flexDirection="row" gap={1} marginLeft="auto" flexShrink={0}>
