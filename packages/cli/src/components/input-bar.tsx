@@ -2,13 +2,16 @@ import { TextareaRenderable, type KeyBinding } from "@opentui/core"
 import StatusBar from "./status-bar"
 import { CommandMenu } from "./command-menu"
 import { useCallback, useEffect, useRef } from "react"
-import { useRenderer } from "@opentui/react"
+import { useKeyboard, useRenderer } from "@opentui/react"
 import { useCommandMenu } from "./command-menu/use-command-menu"
 import type { Command } from "./command-menu/types"
 import { useToast } from "../providers/toast"
 import { useKeyboardLayer } from "../providers/keyboard-layer"
 import { useDialog } from "../providers/dialog"
 import { useTheme } from "../providers/theme"
+import { useNavigate } from "react-router"
+import {Mode} from "@selfcode/database/enums"
+import { usePromptConfig } from "../providers/prompt-config"
 
 type Props= {
     onSubmit : (text:string)=>void
@@ -29,8 +32,10 @@ function InputBar({onSubmit,disabled=false}:Props) {
     const renderer= useRenderer()
     const toast=useToast()
     const dialog =useDialog()
+    const navigate = useNavigate()
     const {isTopLayer , setResponder} = useKeyboardLayer()
     const {colors} = useTheme()
+    const {mode , toggleMode , setMode, setModel}=usePromptConfig()
 
     const { showCommandMenu,
         commandQuery,
@@ -54,18 +59,24 @@ function InputBar({onSubmit,disabled=false}:Props) {
                         process.exit(0)                    
                 },
                 toast,
-                dialog
+                dialog,
+                navigate,
+                mode,
+                setModel,
+                setMode
             })
         }
         else{
             textarea.insertText(command.value+" ")
         }
-    },[renderer,toast,dialog])
+    },[renderer,toast,dialog,navigate, mode,setModel,setMode])
 
     const handleCommandExecute=useCallback((index:number)=>{
         const command = resolveCommand(index)
         handleCommand(command)
     },[resolveCommand, handleCommand])
+
+
 
     const handleTextareaContentChange = useCallback(()=>{
 
@@ -74,6 +85,8 @@ function InputBar({onSubmit,disabled=false}:Props) {
 
         handleContentChange(textarea.plainText)
     },[])
+
+
     
     const handleSubmit=useCallback(()=>{
         if (disabled) return
@@ -88,6 +101,17 @@ function InputBar({onSubmit,disabled=false}:Props) {
         onSubmit(text)
         textarea.setText("")
     },[disabled,onSubmit])
+
+
+    useKeyboard((key)=>{
+        if(disabled) return
+        if (!isTopLayer("base")) return
+        if(key.name==="tab"){
+            key.preventDefault()
+            toggleMode()
+        }
+    })
+
 
     useEffect(()=>{
         const textarea= textareaRef.current
@@ -130,7 +154,7 @@ function InputBar({onSubmit,disabled=false}:Props) {
     <box width="100%" alignItems="center">
         <box border={["left"]}
         width="100%"
-        borderColor={colors.primary}>
+        borderColor={mode===Mode.BUILD ? colors.primary : colors.planMode}>
             <box position="relative"
             justifyContent="center"
             paddingX={2}
