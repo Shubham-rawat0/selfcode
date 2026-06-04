@@ -1,17 +1,25 @@
+import { Mode } from "@selfcode/database/enums"
 import { useTheme } from "../../providers/theme"
+import { EmptyBorder } from "../border"
 
 type Props={
-    message:string
+    message:string,
+    mode:Mode
 }
 
-export function UserMessage({message}:Props){
+export function UserMessage({message,mode}:Props){
     const {colors} = useTheme()
 
     return (
         <box width="100%" alignItems="center">
             <box border={['left']}
-            borderColor={colors.primary}
-            width="100%">
+            borderColor={mode === Mode.PLAN? colors.planMode : colors.primary}
+            width="100%"
+            customBorderChars={{
+                ...EmptyBorder,
+                 vertical: "┃",
+                  bottomLeft: "╹",
+            }}>
               <box justifyContent="center"
               paddingX={2}
               paddingY={1}
