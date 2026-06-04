@@ -34,7 +34,7 @@ export const chatStreamEventSchema = z.discriminatedUnion("type",[
         text:z.string()
     }),
     z.object({
-        type:z.literal("tool-cool"),
+        type:z.literal("tool-call"),
         toolcallId:z.string(),
         toolName:z.string(),
         args:toolCallArgsSchema

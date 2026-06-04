@@ -3,12 +3,23 @@ import { chatStreamEventSchema, type SupportedChatModelId } from "@selfcode/shar
 import { EventSourceParserStream } from "eventsource-parser/stream";
 import type { ClientResponse } from "hono/client";
 import prettyMs from "pretty-ms"
-import { use, useCallback, useEffect, useRef, useState } from "react";
+import {  useCallback, useEffect, useRef, useState } from "react";
 import { getErrorMessage } from "../lib/http-error";
 import { apiClient } from "../lib/api-client";
 
-export type ClientMessagePart = {type:"text",
-    text:string}
+
+export type ClientToolCallPart = {
+    type : "tool-call",
+    id:string,
+    name:string,
+    args: Record<string, unknown>,
+    result?:string,
+    status:"calling"|"done"
+}
+
+export type ClientMessagePart = {type:"reasoning",text:string,}| 
+    {type:"text", text:string,} |
+    ClientToolCallPart
 
 type SubmitParams={
     userText : string,
@@ -180,6 +191,43 @@ export function UseChat(sessionId:string , initialMessage:Message[]){
             }
 
             switch (event.type){
+                case "reasoning-delta":{
+                     const last = parts[parts.length-1]
+                    if (last && last.type==="reasoning"){
+                        last.text+=event.text
+                    }
+                    else{
+                        parts.push({type:"reasoning",text:event.text})
+                    }
+                    emitParts(activeStream.requestId,parts)
+                    break
+                }
+         
+                case "tool-call":{
+                    
+                        parts.push({type:"tool-call",
+                            id:event.toolcallId,
+                            name: event.toolName,
+                            args:event.args,
+                            status:"calling"
+                        })
+                 
+                    emitParts(activeStream.requestId,parts)
+                    break
+                }
+
+                case "tool-result": {
+                        const tc= parts.find(
+                            (p):p is ClientToolCallPart=>p.type==="tool-call" && p.id === event.toolcallId
+                        )
+                        if(tc){
+                            tc.result = event.result
+                            tc.status = "done"
+                        }
+                        emitParts(activeStream.requestId,parts)
+                        break;
+                }
+
                 case "text-delta":{
                     const last = parts[parts.length-1]
                     if (last && last.type==="text"){
