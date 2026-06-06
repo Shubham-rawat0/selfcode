@@ -21,6 +21,7 @@
     "@ai-sdk/provider-utils": "^4.0.27",
     "@clerk/backend": "^3.5.0",
     "@hono/zod-validator": "^0.8.0",
+    "@polar-sh/sdk": "^0.48.0",
     "@selfcode/database": "workspace:*",
     "@selfcode/shared": "workspace:*",
     "ai": "^6.0.193",

@@ -3,6 +3,7 @@ import {AgentsDialogContent , ModelsDialogContent, SessionDialogContent , ThemeD
 import type { Command } from "./types"
 import { performLogin } from "../../lib/oauth";
 import { clearAuth } from "../../lib/auth";
+import { openBillingPortal, openUpgradeChekout } from "../../lib/upgrade";
 
 export const COMMANDS: Command[] = [
   {
@@ -77,7 +78,7 @@ export const COMMANDS: Command[] = [
     name: "logout",
     description: "Sign out of your account",
     value: "/logout",
-    action: (ctx) => { 
+    action:  (ctx) => { 
       clearAuth()
       ctx.toast.show({variant:"success",message:"Signed out..."
       })
@@ -90,6 +91,18 @@ export const COMMANDS: Command[] = [
     action: async (ctx) => {
       ctx.toast.show({message:"Opening credits checkout..."
       })
+
+      try {
+        await openUpgradeChekout()
+        ctx.toast.show({
+          variant:"success",
+          message:"Checkout opened in browser"
+        })
+      } catch (error) {
+          const message = error instanceof Error ? error.message :"Failed to open checkout"
+          ctx.toast.show({variant:"error",message})
+      }
+      
     },
   },
   {
@@ -99,6 +112,17 @@ export const COMMANDS: Command[] = [
     action: async (ctx) => {
       ctx.toast.show({message:"Opening billing portal..."
       })
+
+      try {
+        await openBillingPortal()
+        ctx.toast.show({
+          variant:"success",
+          message:"Billing portal opened in browser"
+        })
+      } catch (error) {
+        const message = error instanceof Error ? error.message :"Failed to open billing portal"
+          ctx.toast.show({variant:"error",message})
+      }
     },
   },
   {

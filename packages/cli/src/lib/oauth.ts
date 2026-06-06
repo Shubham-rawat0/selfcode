@@ -1,9 +1,5 @@
-import { Input } from "@opentui/core";
 import open from "open"
-import { UNSAFE_useScrollRestoration } from "react-router";
-import { ur } from "zod/locales";
 import { saveAuth } from "./auth";
-import { serve } from "bun";
 
 const LOGIN_TIMEOUT_MS=5*60*1000
 
