@@ -1,6 +1,6 @@
 export type ModelPricing = {
-  inputUsdPerMillionTokens: number;
-  outputUsdPerMillionTokens: number;
+  inputInrPerMillionTokens: number;
+  outputInrPerMillionTokens: number;
 };
 
 export type SupportedProvider = "anthropic" | "openai" | "google";
@@ -16,56 +16,56 @@ export const SUPPORTED_CHAT_MODELS = [
     id: "claude-sonnet-4-6",
     provider: "anthropic",
     pricing: {
-      inputUsdPerMillionTokens: 3,
-      outputUsdPerMillionTokens: 15,
+      inputInrPerMillionTokens: 3,
+      outputInrPerMillionTokens: 15,
     },
   },
   {
     id: "claude-haiku-4-5",
     provider: "anthropic",
     pricing: {
-      inputUsdPerMillionTokens: 1,
-      outputUsdPerMillionTokens: 5,
+      inputInrPerMillionTokens: 100,
+      outputInrPerMillionTokens: 500,
     },
   },
   {
     id: "claude-opus-4-6",
     provider: "anthropic",
     pricing: {
-      inputUsdPerMillionTokens: 5,
-      outputUsdPerMillionTokens: 25,
+      inputInrPerMillionTokens: 500,
+      outputInrPerMillionTokens: 2500,
     },
   },
   {
     id: "gpt-5.4",
     provider: "openai",
     pricing: {
-      inputUsdPerMillionTokens: 2.5,
-      outputUsdPerMillionTokens: 15,
+      inputInrPerMillionTokens: 250,
+      outputInrPerMillionTokens: 1500,
     },
   },
   {
     id: "gpt-5.4-mini",
     provider: "openai",
     pricing: {
-      inputUsdPerMillionTokens: 0.75,
-      outputUsdPerMillionTokens: 4.5,
+      inputInrPerMillionTokens: 75,
+      outputInrPerMillionTokens: 450,
     },
   },
   {
     id: "gpt-5.4-nano",
     provider: "openai",
     pricing: {
-      inputUsdPerMillionTokens: 0.2,
-      outputUsdPerMillionTokens: 1.25,
+      inputInrPerMillionTokens: 20,
+      outputInrPerMillionTokens: 125,
     },
   },
   {
     id: "gemini-2.5-flash",
     provider: "google",
     pricing: {
-      inputUsdPerMillionTokens: 0.2,
-      outputUsdPerMillionTokens: 1.25,
+      inputInrPerMillionTokens: 20,
+      outputInrPerMillionTokens: 125,
     },
   },
 ] as const satisfies readonly SupportedChatModelDefinition[];
