@@ -27,7 +27,7 @@ export function SessionShell({children,onSubmit,inputDisabled=false,loading=fals
         gap={1}>
 
             <scrollbox flexGrow={1} width="100%" stickyScroll stickyStart="bottom">
-                <box gap={1}>{children}</box>
+                <box >{children}</box>
             </scrollbox>
 
             <box flexShrink={0}>
