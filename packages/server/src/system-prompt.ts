@@ -1,8 +1,7 @@
-import type { Mode } from "@selfcode/database/enums";
+import type { ModeType } from "@selfcode/shared";
 
 type SystemPromptParams = {
-  mode: Mode;
-  cwd:string|null
+  mode: ModeType;
 };
 
 export function buildSystemPrompt({ 

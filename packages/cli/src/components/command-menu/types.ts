@@ -1,15 +1,14 @@
-import type { Mode } from "@selfcode/database/enums"
 import type { DialogContextValue } from "../../providers/dialog"
 import type { ToastContextValue } from "../../providers/toast"
-import type { SupportedChatModelId } from "@selfcode/shared"
+import type { ModeType , SupportedChatModelId } from "@selfcode/shared"
 
 export type CommandContext={
     exit:()=>void
     toast:ToastContextValue
     dialog:DialogContextValue
     navigate:(path:string)=>void
-    mode: Mode
-    setMode: (mode:Mode)=>void
+    mode: ModeType
+    setMode: (mode:ModeType)=>void
     setModel:(model:SupportedChatModelId)=>void
 }
 
